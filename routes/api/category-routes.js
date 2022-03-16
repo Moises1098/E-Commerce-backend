@@ -19,7 +19,7 @@ router.get('/:id', (req, res) => {
   // be sure to include its associated Products
   try {
     const CategoryData = Category.findByPk(req.params.id, {
-      include: [{ model: Category, through: Tag , as: 'Category' }]
+      include: [{ model: Product, through: Tag , as: 'Category' }]
     });
     if (!CategoryData) {
       res.status(404).json({ message: 'No Category found with this id!' });
