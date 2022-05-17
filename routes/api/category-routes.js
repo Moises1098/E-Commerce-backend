@@ -47,26 +47,6 @@ router.post('/', async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
-  Category.create(req.body)
-  .then((category) => {
-    // if there's category tags, we need to create pairings to bulk create in the categoryTag model
-    if (req.body.tagIds.length) {
-      const categoryTagIdArr = req.body.tagIds.map((tag_id) => {
-        return {
-          category_id: category.id,
-          tag_id,
-        };
-      });
-      return categoryTag.bulkCreate(categoryTagIdArr);
-    }
-    // if no category tags, just respond
-    res.status(200).json(category);
-  })
-  .then((categoryTagIds) => res.status(200).json(categoryTagIds))
-  .catch((err) => {
-    console.log(err);
-    res.status(400).json(err);
-  });
 });
 
 router.put('/:id', (req, res) => {
